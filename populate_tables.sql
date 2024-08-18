@@ -7,14 +7,14 @@ VALUES
     (79450061382, 'Júnior', 'Bocão', 'M', 1.86, DATE '1965-03-26');
 
 -- Populando a tabela atracao
-INSERT INTO atracao (nome_atr, categoria, limite_max, idade_min, altura_min)
+INSERT INTO atracao (nome_atracao, categoria, limite_max, idade_min, altura_min)
 VALUES 
     ('Montanha Russa', 'radical', 20, 12, 1.50),
     ('Carrossel', 'família', 30, 0, 1.00),
     ('Thunderbolt', 'radical', 10, 0, 1.50);
 
 -- Populando a tabela funcionario
-INSERT INTO funcionario (cpf, supervisor, nome, sobrenome, sexo, salário, data_de_nascimento)
+INSERT INTO funcionario (cpf, cpf_supervisor, nome, sobrenome, sexo, salário, data_de_nascimento)
 VALUES 
     (12345678932, NULL, 'José', 'Oliveira', 'M', 2000.00, DATE '1995-03-25'),
     (12345678956, 1, 'Ana', 'Santos', 'F', 1500.00, DATE '1998-07-25'),
@@ -27,28 +27,28 @@ VALUES
     (12345678988, 1, 'Pietra', 'Silva', 'M', 1700.00, DATE '1990-07-21');
 
 
-Populando a tabela operador
-INSERT INTO operador (cpf_func, atracao)
+-- Populando a tabela operador
+INSERT INTO operador (cpf_funcionario, atracao)
 VALUES 
    (12345678932, 'Montanha Russa'),
   (12345678956, 'Carrossel'),
    (12345678978, 'Thunderbolt');
 
-Populando a tabela recepcionista
-INSERT INTO recepcionista (cpf_func)
+-- Populando a tabela recepcionista
+INSERT INTO recepcionista (cpf_funcionario)
 VALUES 
    (12345678996),
    (12345678945);
 
-Populando a tabela organizador
-INSERT INTO organizador (cpf_func)
+-- Populando a tabela organizador
+INSERT INTO organizador (cpf_funcionario)
 VALUES 
    (12345678915),
    (12345678944);
-acho que devemos colocar mais organizadores
+-- acho que devemos colocar mais organizadores
 
-Populando a tabela vendedor
-INSERT INTO vendedor (cpf_func)
+-- Populando a tabela vendedor
+INSERT INTO vendedor (cpf_funcionario)
 VALUES 
    (12345678955),
    (12345678988);
@@ -82,7 +82,7 @@ VALUES
     ('E', 'perto da saída');
 
 -- Populando a tabela evento
-INSERT INTO evento (id, organizador, localidade, nome, data_do_evento, publico_alvo, descricao)
+INSERT INTO evento (id, organizador, localidade, nome, data_evento, publico_alvo, descricao)
 VALUES 
     (1, 12345678915, 'A', 'Festa Junina', DATE '2021-06-22', 'família', 'Festa com comidas típicas e brincadeiras'),
     (2, 12345678915, 'B', 'Festa de Halloween', DATE '2021-10-31', 'adulto', 'Festa com fantasias e decoração temática'),
@@ -116,7 +116,7 @@ VALUES
     (12334567789, 3);
 
 -- Populando a tabela realizar
-INSERT INTO realizar (compra, visitante, vendedor)
+INSERT INTO realizar (id_compra, cpf_visitante, cpf_vendedor)
 VALUES 
     (1, 11234567899, 12345678955),
     (2, 12234567889, 12345678988),
