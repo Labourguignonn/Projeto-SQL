@@ -13,7 +13,6 @@ DROP TABLE evento;
 DROP TABLE acompanhante;
 DROP TABLE aquisicao;
 DROP TABLE utilizar;
-DROP TABLE participar;
 DROP TABLE realizar;
 
 CREATE TABLE visitante (
@@ -144,14 +143,6 @@ CREATE TABLE utilizar(
     CONSTRAINT utilizar_pk PRIMARY KEY (nome_atracao, cpf_visitante, horario),
     CONSTRAINT utilizar_atracao_fk FOREIGN KEY (nome_atracao) REFERENCES atracao (nome_atracao),
     CONSTRAINT utilizar_visitante_fk FOREIGN KEY (cpf_visitante) REFERENCES visitante (cpf)
-);
-
-CREATE TABLE participar(
-    cpf_visitante NUMBER(11),
-    id_evento NUMBER(5),
-    CONSTRAINT participar_pk PRIMARY KEY (cpf_visitante, id_evento),
-    CONSTRAINT participar_visitante_fk FOREIGN KEY (cpf_visitante) REFERENCES visitante (cpf),
-    CONSTRAINT participar_evento_fk FOREIGN KEY (id_evento) REFERENCES evento (id)
 );
 
 CREATE TABLE realizar(
