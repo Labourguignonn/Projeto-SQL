@@ -40,7 +40,7 @@ INTO visitante VALUES(12565917707, 'Ribamar', 'Glorioso', 'M', 1.74, DATE '1981-
 INTO visitante VALUES(12565917708, 'Ronaldo', 'Vieira', 'M', 1.78, DATE '1988-05-14')
 INTO visitante VALUES(12565917709, 'Hebe', 'Gouveia', 'F', 1.62, DATE '1948-02-05')
 INTO visitante VALUES(12565917710, 'Isabel', 'Costa', 'F', 1.79, DATE '1997-07-25')
-SELECT 1 FROM DUAL;
+SELECT 1 FROM dual;
 
 -- Populando a tabela atracao
 INSERT ALL
@@ -61,7 +61,7 @@ INTO atracao VALUES('Mansão do Terror', 'radical', 30, 18, 1.40) --operado por 
 INTO atracao VALUES('Tiro ao Alvo', 'família', 10, 6, 1.50) --operado por 50596374158(Harrison)
 INTO atracao VALUES('Escalador', 'radical', 15, 12, 1.60) --operado por 75315968423(Italo)
 INTO atracao VALUES('Escorregador', 'família', 15, 6, 1.40) --operado por 15375964701(Fernando)
-SELECT 1 from DUAL;
+SELECT 1 FROM dual;
 
 -- Populando a tabela funcionario
 INSERT ALL
@@ -100,8 +100,7 @@ INTO funcionario VALUES(12345678988, 98421823588, 'Pietra', 'Silva', 'F', 1700.0
 INTO funcionario VALUES(55123645979, 98421823588, 'David', 'Pierre', 'M', 1700.00, DATE '2000-01-10') --vendedor e supervisionado por 98421823588(Rafaela)
 INTO funcionario VALUES(89758702589, 98421823588, 'Rosa', 'Valverde', 'F', 1700.00, DATE '1995-02-28') --vendedor e supervisionado por 98421823588(Rafaela)
 INTO funcionario VALUES(49212206713, 98421823588, 'Claudemir', 'Alencar','M', 1700.00, DATE '1987-08-18') --vendedor e supervisionado por 98421823588(Rafaela)
-
-SELECT 1 FROM DUAL;
+SELECT 1 FROM dual;
 
 -- Populando a tabela operador
 INSERT ALL
@@ -122,7 +121,7 @@ INTO operador VALUES(31415926535, 'Mansão do Terror')
 INTO operador VALUES(50596374158, 'Tiro ao Alvo')
 INTO operador VALUES(75315968423, 'Escalador')
 INTO operador VALUES(15375964701, 'Escorregador')
-SELECT 1 FROM DUAL;
+SELECT 1 FROM dual;
 
 -- Populando a tabela recepcionista
 INSERT ALL
@@ -130,7 +129,7 @@ INTO recepcionista VALUES (12345678955)
 INTO recepcionista VALUES (12345678996)
 INTO recepcionista VALUES (12345678945)
 INTO recepcionista VALUES (12345678966)
-SELECT 1 from DUAL;
+SELECT 1 FROM dual;
 
 -- Populando a tabela organizador
 INSERT ALL
@@ -140,7 +139,7 @@ INTO organizador VALUES (12745278910)
 INTO organizador VALUES (12345678944)
 INTO organizador VALUES (12345678915)
 INTO organizador VALUES (13348678906)
-SELECT 1 from DUAL;
+SELECT 1 FROM dual;
 
 -- acho que devemos colocar mais organizadores
 
@@ -151,8 +150,7 @@ INTO vendedor VALUES (12345678988)
 INTO vendedor VALUES (55123645979)
 INTO vendedor VALUES (89758702589)
 INTO vendedor VALUES (49212206713)
-
-SELECT 1 from DUAL;
+SELECT 1 FROM dual;
 
 -- Populando a tabela ingresso
 INSERT ALL
@@ -210,52 +208,58 @@ INTO ingresso VALUES(1370001, 12565917707, 'inteira', 'pix', DATE '2024-12-29')
 INTO ingresso VALUES(1380001, 12565917708, 'meia', 'pix', DATE '2024-12-29')
 INTO ingresso VALUES(1390001, 12565917709, 'inteira', 'pix', DATE '2024-12-29')
 INTO ingresso VALUES(1400001, 21649385703, 'meia', 'credito', DATE '2024-12-29')
-SELECT 1 FROM DUAL;
+SELECT 1 FROM dual;
 
 -- Populando a tabela compra
-INSERT ALL
-INTO compra VALUES(505100000, DATE '2024-01-18', 150.25, 'dinheiro')
-INTO compra VALUES(505100001, DATE '2024-01-18', 399.99, 'credito')
-INTO compra VALUES(505100002, DATE '2024-01-18', 505.75, 'debito')
-INTO compra VALUES(505100003, DATE '2024-01-18', 225.60, 'credito')
-INTO compra VALUES(505100004, DATE '2024-01-18', 580.45, 'pix')
-INTO compra VALUES(505100005, DATE '2024-01-18', 1200.50, 'debito')
-INTO compra VALUES(505100006, DATE '2024-01-18', 670.25, 'debito')
-INTO compra VALUES(505100007, DATE '2024-06-29', 320.00, 'dinheiro')
-INTO compra VALUES(505100008, DATE '2024-06-29', 470.10, 'dinheiro')
-INTO compra VALUES(505100009, DATE '2024-06-29', 590.85, 'debito')
-INTO compra VALUES(505100010, DATE '2024-06-29', 540.55, 'pix')
-INTO compra VALUES(505100011, DATE '2024-06-29', 275.30, 'debito')
-INTO compra VALUES(505100012, DATE '2024-06-29', 8500.75, 'pix')
-INTO compra VALUES(505100013, DATE '2024-06-29', 365.70, 'pix')
-INTO compra VALUES(505100014, DATE '2024-06-30', 485.90, 'credito')
-INTO compra VALUES(505100015, DATE '2024-06-30', 123.45, 'credito')
-INTO compra VALUES(505100016, DATE '2024-06-30', 450.00, 'credito')
-INTO compra VALUES(505100017, DATE '2024-06-30', 560.35, 'debito')
-INTO compra VALUES(505100018, DATE '2024-06-30', 310.25, 'pix')
-INTO compra VALUES(505100019, DATE '2024-06-30', 210.50, 'dinheiro')
-INTO compra VALUES(505100020, DATE '2024-06-30', 399.20, 'debito')
-INTO compra VALUES(505100021, DATE '2024-07-01', 575.60, 'debito')
-INTO compra VALUES(505100022, DATE '2024-07-01', 530.80, 'debito')
-INTO compra VALUES(505100023, DATE '2024-07-01', 2300.80, 'debito')
-INTO compra VALUES(505100024, DATE '2024-07-01', 4500.00, 'credito')
-INTO compra VALUES(505100025, DATE '2024-07-01', 345.90, 'debito')
-INTO compra VALUES(505100026, DATE '2024-07-01', 180.75, 'dinheiro')
-INTO compra VALUES(505100027, DATE '2024-07-01', 499.99, 'credito')
-INTO compra VALUES(505100028, DATE '2024-11-15', 589.10, 'credito')
-INTO compra VALUES(505100029, DATE '2024-11-15', 300.00, 'debito')
-INTO compra VALUES(505100030, DATE '2024-11-15', 375.25, 'debito')
-INTO compra VALUES(505100031, DATE '2024-11-15', 290.80, 'debito')
-INTO compra VALUES(505100032, DATE '2024-11-15', 7800.10, 'debito')
-INTO compra VALUES(505100033, DATE '2024-11-15', 599.99, 'pix')
-INTO compra VALUES(505100034, DATE '2024-11-15', 405.50, 'pix')
-INTO compra VALUES(505100035, DATE '2024-12-29', 14500.30, 'debito')
-INTO compra VALUES(505100036, DATE '2024-12-29', 540.00, 'debito')
-INTO compra VALUES(505100037, DATE '2024-12-29', 420.10, 'credito')
-INTO compra VALUES(505100038, DATE '2024-12-29', 7000.45, 'credito')
-INTO compra VALUES(505100039, DATE '2024-12-29', 495.70, 'credito')
-INTO compra VALUES(505100040, DATE '2024-12-29', 310.15, 'dinheiro')
-SELECT 1 from DUAL;
+CREATE SEQUENCE compra_seq
+    START WITH 505100000
+    INCREMENT BY 1;
+
+INSERT INTO compra(id, data_compra, valor_total, metodo_pagto)
+SELECT compra_seq.NEXTVAL, data_compra, valor_total, metodo_pagto
+FROM (
+    SELECT DATE '2024-01-18' AS data_compra, 150.25 AS valor_total, 'dinheiro' AS metodo_pagto FROM dual UNION ALL
+    SELECT DATE '2024-01-18', 399.99, 'credito' FROM dual UNION ALL
+    SELECT DATE '2024-01-18', 505.75, 'debito' FROM dual UNION ALL
+    SELECT DATE '2024-01-18', 225.60, 'credito' FROM dual UNION ALL
+    SELECT DATE '2024-01-18', 580.45, 'pix' FROM dual UNION ALL
+    SELECT DATE '2024-01-18', 1200.50, 'debito' FROM dual UNION ALL
+    SELECT DATE '2024-01-18', 670.25, 'debito' FROM dual UNION ALL
+    SELECT DATE '2024-06-29', 320.00, 'dinheiro' FROM dual UNION ALL
+    SELECT DATE '2024-06-29', 470.10, 'dinheiro' FROM dual UNION ALL
+    SELECT DATE '2024-06-29', 590.85, 'debito' FROM dual UNION ALL
+    SELECT DATE '2024-06-29', 540.55, 'pix' FROM dual UNION ALL
+    SELECT DATE '2024-06-29', 275.30, 'debito' FROM dual UNION ALL
+    SELECT DATE '2024-06-29', 8500.75, 'pix' FROM dual UNION ALL
+    SELECT DATE '2024-06-29', 365.70, 'pix' FROM dual UNION ALL
+    SELECT DATE '2024-06-30', 485.90, 'credito' FROM dual UNION ALL
+    SELECT DATE '2024-06-30', 123.45, 'credito' FROM dual UNION ALL
+    SELECT DATE '2024-06-30', 450.00, 'credito' FROM dual UNION ALL
+    SELECT DATE '2024-06-30', 560.35, 'debito' FROM dual UNION ALL
+    SELECT DATE '2024-06-30', 310.25, 'pix' FROM dual UNION ALL
+    SELECT DATE '2024-06-30', 210.50, 'dinheiro' FROM dual UNION ALL
+    SELECT DATE '2024-06-30', 399.20, 'debito' FROM dual UNION ALL
+    SELECT DATE '2024-07-01', 575.60, 'debito' FROM dual UNION ALL
+    SELECT DATE '2024-07-01', 530.80, 'debito' FROM dual UNION ALL
+    SELECT DATE '2024-07-01', 2300.80, 'debito' FROM dual UNION ALL
+    SELECT DATE '2024-07-01', 4500.00, 'credito' FROM dual UNION ALL
+    SELECT DATE '2024-07-01', 345.90, 'debito' FROM dual UNION ALL
+    SELECT DATE '2024-07-01', 180.75, 'dinheiro' FROM dual UNION ALL
+    SELECT DATE '2024-07-01', 499.99, 'credito' FROM dual UNION ALL
+    SELECT DATE '2024-11-15', 589.10, 'credito' FROM dual UNION ALL
+    SELECT DATE '2024-11-15', 300.00, 'debito' FROM dual UNION ALL
+    SELECT DATE '2024-11-15', 375.25, 'debito' FROM dual UNION ALL
+    SELECT DATE '2024-11-15', 290.80, 'debito' FROM dual UNION ALL
+    SELECT DATE '2024-11-15', 7800.10, 'debito' FROM dual UNION ALL
+    SELECT DATE '2024-11-15', 599.99, 'pix' FROM dual UNION ALL
+    SELECT DATE '2024-11-15', 405.50, 'pix' FROM dual UNION ALL
+    SELECT DATE '2024-12-29', 14500.30, 'debito' FROM dual UNION ALL
+    SELECT DATE '2024-12-29', 540.00, 'debito' FROM dual UNION ALL
+    SELECT DATE '2024-12-29', 420.10, 'credito' FROM dual UNION ALL
+    SELECT DATE '2024-12-29', 7000.45, 'credito' FROM dual UNION ALL
+    SELECT DATE '2024-12-29', 495.70, 'credito' FROM dual UNION ALL
+    SELECT DATE '2024-12-29', 310.15, 'dinheiro' FROM dual
+);
 
 -- Populando a tabela itens_comprados 
 INSERT ALL 
@@ -338,7 +342,7 @@ INTO itens_comprados VALUES (505100038, 'Porta-Moedas')
 INTO itens_comprados VALUES (505100039, 'Brinquedo de Construção')
 INTO itens_comprados VALUES (505100039, 'Anel de Brinquedo')
 INTO itens_comprados VALUES (505100040, 'Bolsa')
-SELECT 1 from DUAL;
+SELECT 1 FROM dual;
 
 -- Populando a tabela info_evento
 INSERT ALL
@@ -354,7 +358,7 @@ INTO info_evento VALUES('Show das Princesas', 'infantil', 'Show com personagens 
 INTO info_evento VALUES('Show de Mágica', 'família', 'Show de mágica com diversos truques')
 INTO info_evento VALUES('Musical Moana', 'infantil', 'Musical com personagens do filme Moana')
 INTO info_evento VALUES('Musical Bambi', 'infantil', 'Musical com personagens do filme Bambi')
-SELECT 1 FROM DUAL;
+SELECT 1 FROM dual;
 
 -- Populando a tabela evento
 INSERT ALL 
@@ -370,7 +374,7 @@ INTO evento VALUES(12015, 12745278910, 'Show das Princesas', 'B','ao lado do car
 INTO evento VALUES(12016, 12155978954, 'Show de Mágica', 'D','perto da entrada do parque', DATE '2024-09-30')
 INTO evento VALUES(12017, 13348678906, 'Musical Moana', 'C','perto do quiosque de pipoca', DATE '2025-10-10')
 INTO evento VALUES(12018, 13348678906, 'Musical Bambi','E','perto da sorveteria', DATE '2024-03-14')
-SELECT 1 from DUAL;
+SELECT 1 FROM dual;
 
 -- Populando a tabela acompanhante
 INSERT ALL
@@ -383,7 +387,7 @@ INTO acompanhante VALUES(12334567789, 1, 'Severina', 'Santos', 67, 1.58)
 INTO acompanhante VALUES(12334567789, 2, 'Paula', 'Pereira', 46, 1.63)
 INTO acompanhante VALUES(12334567789, 3, 'Plínio', 'Pereira', 8, 1.35)
 INTO acompanhante VALUES(79450061382, 1, 'Dom Diego', 'De La Vega', 33, 1.73)
-SELECT 1 from DUAL;
+SELECT 1 FROM dual;
 
 -- Populando a tabela aquisicao
 INSERT ALL
@@ -437,7 +441,7 @@ INTO aquisicao VALUES(1270001, 12345678966)
 INTO aquisicao VALUES(1310001, 12345678966) 
 INTO aquisicao VALUES(1350001, 12345678966) 
 INTO aquisicao VALUES(1390001, 12345678966)  
-SELECT 1 from DUAL;
+SELECT 1 FROM dual;
 
 -- Populando a tabela realizar
 INSERT ALL
@@ -486,4 +490,4 @@ INTO realizar VALUES (505100031, 11865917705, 49212206713)
 INTO realizar VALUES (505100034, 12165917705, 49212206713)
 INTO realizar VALUES (505100036, 12465917705, 49212206713)
 INTO realizar VALUES (505100038, 12565917707, 49212206713)
-SELECT 1 from DUAL;
+SELECT 1 FROM dual;
