@@ -1,21 +1,30 @@
 /* criar tabelas OR */
 
-CREATE OR REPLACE TYPE tp_nomeCompleto AS OBJECT (
+CREATE OR REPLACE TYPE tp_nome_completo AS OBJECT (
     nome VARCHAR2(20),
     sobrenome VARCHAR2(50)
 );
 /
 
+CREATE OR REPLACE TYPE tp_telefone AS OBJECT (
+    ddd VARCHAR2(2),
+    numero VARCHAR2(9)
+);
+/
+
+CREATE OR REPLACE TYPE tp_lista_telefones AS VARRAY(3) OF tp_telefone; 
+/
+
 CREATE OR REPLACE TYPE tp_visitante AS OBJECT (
     cpf NUMBER(11),
-    nome_completo tp_nomeCompleto,
+    nome_completo tp_nome_completo,
     sexo VARCHAR2(1),
     altura DECIMAL(3,2),
     data_de_nascimento DATE,
-    telefones tp_telefone_varray,  -- VARRAY para armazenar os telefones
+    telefones tp_lista_telefones,  -- VARRAY para armazenar os telefones
 
     MEMBER FUNCTION idade RETURN NUMBER
-) FINAL;
+);
 /
 
 -- Definir uma função membro para calcular a idade do visitante
@@ -32,19 +41,24 @@ CREATE TABLE tb_visitante OF tp_visitante (
     CONSTRAINT visitante_pk PRIMARY KEY (cpf)
 );
 
-INSERT INTO tb_visitante VALUES (
-    tp_visitante(11234567899, 'João', 'Silva', 'M', 1.75, DATE '1990-01-01',
-    tp_telefone_varray(tp_telefone('99999-9999'), tp_telefone('88888-8888'))
-    )
-);
-
 CREATE OR REPLACE TYPE tp_atracao AS OBJECT (
     nome_atracao VARCHAR2(30),
     categoria VARCHAR2(8),
     limite_max NUMBER,
     idade_min NUMBER,
-    altura_min DECIMAL(3,2)
+    altura_min DECIMAL(3,2),
+    
+    MAP MEMBER FUNCTION map_categoria RETURN VARCHAR2
 );
+/
+
+CREATE OR REPLACE TYPE BODY tp_atracao AS
+    -- Função MAP que retorna a categoria para comparação
+    MAP MEMBER FUNCTION map_categoria RETURN VARCHAR2 IS
+    BEGIN
+        RETURN categoria;
+    END;
+END;
 /
 
 CREATE TABLE tb_atracao OF tp_atracao (
@@ -53,8 +67,8 @@ CREATE TABLE tb_atracao OF tp_atracao (
 
 CREATE OR REPLACE TYPE tp_funcionario AS OBJECT (
     cpf NUMBER(11),
-    cpf_supervisor NUMBER(11),
-    nome_completo tp_nomeCompleto,
+    cpf_supervisor REF tp_funcionario,
+    nome_completo tp_nome_completo,
     sexo VARCHAR2(1),
     salario DECIMAL(8,2),
     data_de_nascimento DATE,
@@ -78,13 +92,13 @@ END;
 
 CREATE TABLE tb_funcionario OF tp_funcionario (
     CONSTRAINT funcionario_pk PRIMARY KEY (cpf),
-    CONSTRAINT funcionario_supervisor_fk FOREIGN KEY (cpf_supervisor) REFERENCES tb_funcionario (cpf),
-    CONSTRAINT funcionario_supervisor_check CHECK (cpf <> cpf_supervisor)
+    CONSTRAINT funcionario_sexo_check CHECK (sexo IN ('M', 'F', 'O')),
+    CONSTRAINT funcionario_supervisor_check CHECK (cpf <> DEREF(cpf_supervisor).cpf)
 );
 
 -- Criação do tipo operador, do corpo do tipo e da tabela
 CREATE OR REPLACE TYPE tp_operador UNDER tp_funcionario (
-    atracao VARCHAR2(30),
+    atracao REF tp_atracao SCOPE IS tb_atracao,
     CONSTRUCTOR FUNCTION tp_operador(f tp_funcionario) RETURN SELF AS RESULT,
     OVERRIDING MEMBER PROCEDURE exibir_info(SELF tp_operador)
 ) FINAL;
@@ -117,9 +131,8 @@ END;
 /
 
 CREATE TABLE tb_operador OF tp_operador (
-    CONSTRAINT operador_pk PRIMARY KEY (cpf_funcionario),
-    CONSTRAINT operador_cpf_fk FOREIGN KEY (cpf_funcionario) REFERENCES tb_funcionario (cpf),
-    CONSTRAINT operador_atracao_fk FOREIGN KEY (atracao) REFERENCES tb_atracao (nome_atracao)
+    CONSTRAINT operador_pk PRIMARY KEY (cpf),
+    CONSTRAINT operador_supervisor_check CHECK (cpf <> DEREF(cpf_supervisor).cpf)
 );
 
 -- Criação do tipo recepcionista, do corpo do tipo e da tabela
@@ -156,8 +169,7 @@ END;
 
 CREATE TABLE tb_recepcionista OF tp_recepcionista (
     CONSTRAINT recepcionista_pk PRIMARY KEY (cpf),
-    CONSTRAINT recepcionista_supervisor_fk FOREIGN KEY (cpf_supervisor) REFERENCES tb_funcionario (cpf),
-    CONSTRAINT recepcionista_supervisor_check CHECK (cpf <> cpf_supervisor)
+    CONSTRAINT recepcionista_supervisor_check CHECK (cpf <> DEREF(cpf_supervisor).cpf)
 );
 
 -- Criação do tipo organizador, do corpo do tipo e da tabela
@@ -194,8 +206,7 @@ END;
 
 CREATE TABLE tb_organizador OF tp_organizador (
     CONSTRAINT organizador_pk PRIMARY KEY (cpf),
-    CONSTRAINT organizador_supervisor_fk FOREIGN KEY (cpf_supervisor) REFERENCES tb_funcionario (cpf),
-    CONSTRAINT organizador_supervisor_check CHECK (cpf <> cpf_supervisor)
+    CONSTRAINT organizador_supervisor_check CHECK (cpf <> DEREF(cpf_supervisor).cpf)
 );
 
 -- Criação do tipo vendedor, do corpo do tipo e da tabela
@@ -232,36 +243,19 @@ END;
 
 CREATE TABLE tb_vendedor OF tp_vendedor (
     CONSTRAINT vendedor_pk PRIMARY KEY (cpf),
-    CONSTRAINT vendedor_supervisor_fk FOREIGN KEY (cpf_supervisor) REFERENCES tb_funcionario (cpf),
-    CONSTRAINT vendedor_supervisor_check CHECK (cpf <> cpf_supervisor)
+    CONSTRAINT vendedor_supervisor_check CHECK (cpf <> DEREF(cpf_supervisor).cpf)
 );
 
 CREATE OR REPLACE TYPE tp_ingresso AS OBJECT (
     id_ingresso NUMBER,
     data_compra DATE,
     valor DECIMAL(8,2),
-    visitante REF tp_visitante,
-    vendedor REF tp_vendedor
+    visitante REF tp_visitante
 );
 /
 
 CREATE TABLE tb_ingresso OF tp_ingresso (
-    CONSTRAINT ingresso_pk PRIMARY KEY (id_ingresso),
-    CONSTRAINT ingresso_visitante_fk FOREIGN KEY (visitante) REFERENCES tb_visitante,
-    CONSTRAINT ingresso_vendedor_fk FOREIGN KEY (vendedor) REFERENCES tb_vendedor
-);
-
-CREATE OR REPLACE TYPE tp_compra AS OBJECT (
-    id NUMBER(9),
-    data_compra DATE,
-    valor_total DECIMAL(8,2),
-    metodo_pagto VARCHAR2(17),
-    itens_comprados tp_itens_comprados_varray
-);
-/
-
-CREATE TABLE tb_compra OF tp_compra (
-    CONSTRAINT compra_pk PRIMARY KEY (id_compra)
+    CONSTRAINT ingresso_pk PRIMARY KEY (id_ingresso)
 );
 
 CREATE OR REPLACE TYPE tp_itens_comprados AS OBJECT (
@@ -270,56 +264,109 @@ CREATE OR REPLACE TYPE tp_itens_comprados AS OBJECT (
 );
 /
 
-CREATE TYPE tp_itens_comprados_varray AS VARRAY(10) OF tp_itens_comprados;
+-- Criando a tabela aninhada para armazenar os itens comprados
+CREATE OR REPLACE TYPE tp_itens_comprados_nest AS TABLE OF tp_itens_comprados;
+/
 
-CREATE TABLE tb_itens_comprados OF tp_itens_comprados (
-    CONSTRAINT itens_comprados_pk PRIMARY KEY (nome_item)
+CREATE OR REPLACE TYPE tp_compra AS OBJECT (
+    id NUMBER(9),
+    data_compra DATE,
+    valor_total DECIMAL(8,2),
+    metodo_pagto VARCHAR2(17),
+    itens_comprados tp_itens_comprados_nest
+);
+/
+
+NESTED TABLE itens_comprados STORE AS tb_itens_comprados_nested;
+
+CREATE TABLE tb_compra OF tp_compra (
+    CONSTRAINT compra_pk PRIMARY KEY (id)
 );
 
-CREATE TYPE tp_info_evento AS OBJECT (
+CREATE OR REPLACE TYPE tp_info_evento AS OBJECT (
     nome VARCHAR2(50),
-    publico_alvo VARCHAR2(8) CHECK (publico_alvo IN ('família', 'infantil', 'adulto'))
+    publico_alvo VARCHAR2(8)
 );
-
+/
 
 CREATE TABLE tb_info_evento OF tp_info_evento (
-    CONSTRAINT info_evento_pk PRIMARY KEY (nome)
+    CONSTRAINT info_evento_pk PRIMARY KEY (nome),
+    CONSTRAINT info_evento_publico_alvo_check CHECK (publico_alvo IN ('família', 'infantil', 'adulto'))
 );
 
-CREATE TYPE tp_evento AS OBJECT (
+CREATE OR REPLACE TYPE tp_evento AS OBJECT (
     id NUMBER(5),
-    organizador REF tp_organizador, --ver se ta certo
-    info_evento REF tp_info_evento, --ver se ta certo
-    zona VARCHAR2(1) CHECK (zona IN ('A', 'B', 'C', 'D', 'E')), -- as opções são: "A", "B", "C", "D" ou "E" -- zona do evento
+    organizador REF tp_organizador,
+    info_evento REF tp_info_evento, 
+    zona VARCHAR2(1),
     complemento VARCHAR2(60), -- complemento do evento
-    data_evento DATE NOT NULL
+    data_evento DATE NOT NULL,
+    ORDER MEMBER FUNCTION compare_date (other tp_evento) RETURN NUMBER
 );
+/
+
+CREATE OR REPLACE TYPE BODY tp_evento AS
+    ORDER MEMBER FUNCTION compare_date(other tp_evento) RETURN NUMBER IS
+    BEGIN
+         IF data_evento < other.data_evento THEN
+            RETURN -1;  -- O evento atual é menor (mais antigo)
+        ELSIF data_evento > other.data_evento THEN
+            RETURN 1;   -- O evento atual é maior (mais recente)
+        ELSE
+            RETURN 0;   -- As datas dos eventos são iguais
+        END IF;
+    END;
+END;
+/
 
 CREATE TABLE tb_evento OF tp_evento (
     CONSTRAINT evento_pk PRIMARY KEY (id),
-    CONSTRAINT evento_organizador_fk FOREIGN KEY (organizador) REFERENCES tb_organizador,
-    CONSTRAINT evento_info_evento_fk FOREIGN KEY (info_evento) REFERENCES tb_info_evento
+    CONSTRAINT evento_zona_check CHECK (zona IN ('A', 'B', 'C', 'D', 'E'))
 );
 
-CREATE TYPE tp_acompanhante AS OBJECT (
-    cpf_visitante NUMBER(11)
-    num_acompanhantes NUMBER(2)
+CREATE OR REPLACE TYPE tp_acompanhante AS OBJECT (
+    cpf_visitante NUMBER(11),
+    num_acompanhantes NUMBER(2),
     nome VARCHAR2(20),
     sobrenome VARCHAR2(50),
     idade NUMBER,
-    altura DECIMAL(3,2) CHECK (altura > 0), 
-
+    altura DECIMAL(3,2)
 );
+/
 
 CREATE TABLE tb_acompanhante OF tp_acompanhante (
-    CONSTRAINT acompanhante_pk PRIMARY KEY (cpf_visitante, num_acompanhantes)
+    CONSTRAINT acompanhante_pk PRIMARY KEY (cpf_visitante, num_acompanhantes),
+    CONSTRAINT acompanhante_altura_check CHECK (altura > 0)
 );
 
--- FICOU FALTANDO CRIAR AQUISICAO, UTILIZAR E REALIZAR 
+CREATE OR REPLACE TYPE tp_aquisicao AS OBJECT (
+    cod_ingresso REF tp_ingresso,
+    cpf_recepcionista REF tp_recepcionista
+);
+/
+
+CREATE TABLE tb_aquisicao OF tp_aquisicao (
+    CONSTRAINT aquisicao_pk PRIMARY KEY (cod_ingresso)
+);
+
+CREATE OR REPLACE TYPE tp_utilizar AS OBJECT(
+    nome_atracao REF tp_atracao,
+    cpf_visitante REF tp_visitante
+);
+/
+
+CREATE TABLE tb_utilizar OF tp_utilizar (
+    CONSTRAINT utilizar_pk PRIMARY KEY (nome_atracao, cpf_visitante)
+) WITH ROWID;
 
 
+CREATE OR REPLACE TYPE tp_realizar AS OBJECT (
+    id_compra REF tp_compra,
+    cpf_visitante REF tp_visitante,
+    cpf_vendedor REF tp_vendedor
+);
+/
 
-
-
-
-
+CREATE TABLE tb_realizar OF tp_realizar (
+    CONSTRAINT realizar_pk PRIMARY KEY (id_compra)
+);
