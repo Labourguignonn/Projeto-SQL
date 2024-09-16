@@ -163,90 +163,90 @@ INTO tb_utilizar VALUES(tp_utilizar((SELECT REF(a) FROM tb_atracao a WHERE a.nom
 SELECT 1 FROM dual;
 
 -- Populando a tabela funcionario
-INSERT ALL
-INTO tb_funcionario VALUES(tp_funcionario(12345678932, NULL, tp_nome_completo('José', 'Oliveira'), 'M', 2000.00, DATE '1995-03-25')) --operador e supervisor
-INTO tb_funcionario VALUES(tp_funcionario(12344567890, NULL, tp_nome_completo('Júlia', 'Silva'), 'F', 2000.00, DATE '1990-05-21')) --operador e supervisor
-INTO tb_funcionario VALUES(tp_funcionario(44344556781, NULL, tp_nome_completo('Barbára', 'Teixeira'), 'F', 2000.00, DATE '1998-03-20')) --operador e supervisor
-INTO tb_funcionario VALUES(tp_funcionario(00865708463, NULL, tp_nome_completo('Alex', 'Rodrigues'), 'M', 2000.00, DATE '2002-04-26')) --operador e supervisor
-INTO tb_funcionario VALUES(tp_funcionario(12345678956,(SELECT REF(f) FROM tb_funcionario f WHERE f.cpf = 12345678932), tp_nome_completo('Ana', 'Santos'), 'F', 1500.00, DATE '1998-07-25')) --operador e supervisionado por 12345678932(José)
-INTO tb_funcionario VALUES(tp_funcionario(12345678978,(SELECT REF(f) FROM tb_funcionario f WHERE f.cpf = 12345678932), tp_nome_completo('Pedro', 'Ferreira'), 'M', 1800.00, DATE '1992-12-30')) --operador e supervisionado por 12345678932(José)
-INTO tb_funcionario VALUES(tp_funcionario(12345678999,(SELECT REF(f) FROM tb_funcionario f WHERE f.cpf = 12344567890), tp_nome_completo('Miguel', 'Santos'), 'M', 1700.00, DATE '1988-07-21')) --operador e supervisionado por 12344567890(Júlia)
-INTO tb_funcionario VALUES(tp_funcionario(21344556781,(SELECT REF(f) FROM tb_funcionario f WHERE f.cpf = 12344567890), tp_nome_completo('Pietro', 'Brito'), 'M', 1700.00, DATE '1999-07-21')) --operador e supervisionado por 12344567890(Júlia)
-INTO tb_funcionario VALUES(tp_funcionario(55662509123,(SELECT REF(f) FROM tb_funcionario f WHERE f.cpf = 44344556781), tp_nome_completo('Márcio', 'Santos'), 'M', 1800.00, DATE '1995-06-25')) --operador e supervisionado por 44344556781(Barbára)
-INTO tb_funcionario VALUES(tp_funcionario(31344556781,(SELECT REF(f) FROM tb_funcionario f WHERE f.cpf = 12345678932), tp_nome_completo('Jorge', 'Lucas'), 'M', 1700.00, DATE '2000-05-22')) --operador e supervisionado por 12345678932(José)
-INTO tb_funcionario VALUES(tp_funcionario(12345678977,(SELECT REF(f) FROM tb_funcionario f WHERE f.cpf = 44344556781), tp_nome_completo('Marcone', 'Pereira'), 'M', 1800.00, DATE '2000-02-09')) -- operador e supervisionado por 44344556781(Barbára)
-INTO tb_funcionario VALUES(tp_funcionario(12345678901,(SELECT REF(f) FROM tb_funcionario f WHERE f.cpf = 44344556781), tp_nome_completo('Diego', 'Medeiros'), 'M', 2000.00, DATE '1996-03-10')) --operador e supervisionado por 44344556781(Barbára)
-INTO tb_funcionario VALUES(tp_funcionario(12345678903,(SELECT REF(f) FROM tb_funcionario f WHERE f.cpf = 12344567890), tp_nome_completo('Kailane', 'Santana'), 'F', 1800.00, DATE '1997-06-30')) --operador e supervisionado por 44344556781(Bárbara)
-INTO tb_funcionario VALUES(tp_funcionario(31415926535,(SELECT REF(f) FROM tb_funcionario f WHERE f.cpf = 00865708463), tp_nome_completo'Pierre', 'Eratóstenes', 'M', 2000.00, DATE '1984-05-18')) --operador e supervisionado por 00865708463(Alex)
-INTO tb_funcionario VALUES(tp_funcionario(50596374158,(SELECT REF(f) FROM tb_funcionario f WHERE f.cpf = 00865708463), tp_nome_completo('Harrison', 'Pereira'), 'M', 1800.00, DATE '1998-01-01')) --operador e supervisionado por 00865708463(Alex)
-INTO tb_funcionario VALUES(tp_funcionario(75315968423,(SELECT REF(f) FROM tb_funcionario f WHERE f.cpf = 00865708463), tp_nome_completo('Italo', 'Sena'), 'M', 1800.00, DATE '1997-07-21')) --operador e supervisionado por 00865708463(Alex)
-INTO tb_funcionario VALUES(tp_funcionario(15375964701,(SELECT REF(f) FROM tb_funcionario f WHERE f.cpf = 00865708463), tp_nome_completo('Fernando', 'Bragança'), 'M', 2000.00, DATE '1995-09-18')) --operador e supervisionado por 00865708463(Alex)
+-- INSERT ALL
+-- INTO tb_funcionario VALUES(tp_funcionario(12345678932, NULL, tp_nome_completo('José', 'Oliveira'), 'M', 2000.00, DATE '1995-03-25')) --operador e supervisor
+-- INTO tb_funcionario VALUES(tp_funcionario(12344567890, NULL, tp_nome_completo('Júlia', 'Silva'), 'F', 2000.00, DATE '1990-05-21')) --operador e supervisor
+-- INTO tb_funcionario VALUES(tp_funcionario(44344556781, NULL, tp_nome_completo('Barbára', 'Teixeira'), 'F', 2000.00, DATE '1998-03-20')) --operador e supervisor
+-- INTO tb_funcionario VALUES(tp_funcionario(00865708463, NULL, tp_nome_completo('Alex', 'Rodrigues'), 'M', 2000.00, DATE '2002-04-26')) --operador e supervisor
+-- INTO tb_funcionario VALUES(tp_funcionario(12345678956,(SELECT REF(f) FROM tb_funcionario f WHERE f.cpf = 12345678932), tp_nome_completo('Ana', 'Santos'), 'F', 1500.00, DATE '1998-07-25')) --operador e supervisionado por 12345678932(José)
+-- INTO tb_funcionario VALUES(tp_funcionario(12345678978,(SELECT REF(f) FROM tb_funcionario f WHERE f.cpf = 12345678932), tp_nome_completo('Pedro', 'Ferreira'), 'M', 1800.00, DATE '1992-12-30')) --operador e supervisionado por 12345678932(José)
+-- INTO tb_funcionario VALUES(tp_funcionario(12345678999,(SELECT REF(f) FROM tb_funcionario f WHERE f.cpf = 12344567890), tp_nome_completo('Miguel', 'Santos'), 'M', 1700.00, DATE '1988-07-21')) --operador e supervisionado por 12344567890(Júlia)
+-- INTO tb_funcionario VALUES(tp_funcionario(21344556781,(SELECT REF(f) FROM tb_funcionario f WHERE f.cpf = 12344567890), tp_nome_completo('Pietro', 'Brito'), 'M', 1700.00, DATE '1999-07-21')) --operador e supervisionado por 12344567890(Júlia)
+-- INTO tb_funcionario VALUES(tp_funcionario(55662509123,(SELECT REF(f) FROM tb_funcionario f WHERE f.cpf = 44344556781), tp_nome_completo('Márcio', 'Santos'), 'M', 1800.00, DATE '1995-06-25')) --operador e supervisionado por 44344556781(Barbára)
+-- INTO tb_funcionario VALUES(tp_funcionario(31344556781,(SELECT REF(f) FROM tb_funcionario f WHERE f.cpf = 12345678932), tp_nome_completo('Jorge', 'Lucas'), 'M', 1700.00, DATE '2000-05-22')) --operador e supervisionado por 12345678932(José)
+-- INTO tb_funcionario VALUES(tp_funcionario(12345678977,(SELECT REF(f) FROM tb_funcionario f WHERE f.cpf = 44344556781), tp_nome_completo('Marcone', 'Pereira'), 'M', 1800.00, DATE '2000-02-09')) -- operador e supervisionado por 44344556781(Barbára)
+-- INTO tb_funcionario VALUES(tp_funcionario(12345678901,(SELECT REF(f) FROM tb_funcionario f WHERE f.cpf = 44344556781), tp_nome_completo('Diego', 'Medeiros'), 'M', 2000.00, DATE '1996-03-10')) --operador e supervisionado por 44344556781(Barbára)
+-- INTO tb_funcionario VALUES(tp_funcionario(12345678903,(SELECT REF(f) FROM tb_funcionario f WHERE f.cpf = 12344567890), tp_nome_completo('Kailane', 'Santana'), 'F', 1800.00, DATE '1997-06-30')) --operador e supervisionado por 44344556781(Bárbara)
+-- INTO tb_funcionario VALUES(tp_funcionario(31415926535,(SELECT REF(f) FROM tb_funcionario f WHERE f.cpf = 00865708463), tp_nome_completo'Pierre', 'Eratóstenes', 'M', 2000.00, DATE '1984-05-18')) --operador e supervisionado por 00865708463(Alex)
+-- INTO tb_funcionario VALUES(tp_funcionario(50596374158,(SELECT REF(f) FROM tb_funcionario f WHERE f.cpf = 00865708463), tp_nome_completo('Harrison', 'Pereira'), 'M', 1800.00, DATE '1998-01-01')) --operador e supervisionado por 00865708463(Alex)
+-- INTO tb_funcionario VALUES(tp_funcionario(75315968423,(SELECT REF(f) FROM tb_funcionario f WHERE f.cpf = 00865708463), tp_nome_completo('Italo', 'Sena'), 'M', 1800.00, DATE '1997-07-21')) --operador e supervisionado por 00865708463(Alex)
+-- INTO tb_funcionario VALUES(tp_funcionario(15375964701,(SELECT REF(f) FROM tb_funcionario f WHERE f.cpf = 00865708463), tp_nome_completo('Fernando', 'Bragança'), 'M', 2000.00, DATE '1995-09-18')) --operador e supervisionado por 00865708463(Alex)
 
-INTO tb_funcionario VALUES(tp_funcionario(12155978954, NULL, tp_nome_completo('Patrício', 'Petrúcio'), 'M', 2200.00, DATE '1978-10-20')) --organizador e supervisor
-INTO tb_funcionario VALUES(tp_funcionario(12045665144, NULL, tp_nome_completo('Roberta', 'Cândido'), 'F', 2200.00, DATE '1981-05-05')) --organizador e supervisor
-INTO tb_funcionario VALUES(tp_funcionario(12745278910, NULL, tp_nome_completo('Dimitri', 'Lumin'), 'M', 2200.00, DATE '1985-04-29')) --organizador e supervisor
-INTO tb_funcionario VALUES(tp_funcionario(12345678944, (SELECT REF(f) FROM tb_funcionario f WHERE f.cpf = 12155978954), tp_nome_completo('Rafael', 'Ferreira'), 'M', 2000.00, DATE '2000-12-07')) --organizador e supervisionado por 12155978954(Patrício)
-INTO tb_funcionario VALUES(tp_funcionario(12345678915, (SELECT REF(f) FROM tb_funcionario f WHERE f.cpf = 12045665144), tp_nome_completo('Paula', 'Ferreira'), 'F', 2000.00, DATE '2001-08-30')) --organizador e supervisionado por 12045665144(Roberta)
-INTO tb_funcionario VALUES(tp_funcionario(13348678906, (SELECT REF(f) FROM tb_funcionario f WHERE f.cpf = 12745278910), tp_nome_completo('Juliety', 'Pinheiro'), 'O', 2000.00, DATE '1999-10-08')) --organizador e supervisionado por 12045665144(Dimitri)
+-- INTO tb_funcionario VALUES(tp_funcionario(12155978954, NULL, tp_nome_completo('Patrício', 'Petrúcio'), 'M', 2200.00, DATE '1978-10-20')) --organizador e supervisor
+-- INTO tb_funcionario VALUES(tp_funcionario(12045665144, NULL, tp_nome_completo('Roberta', 'Cândido'), 'F', 2200.00, DATE '1981-05-05')) --organizador e supervisor
+-- INTO tb_funcionario VALUES(tp_funcionario(12745278910, NULL, tp_nome_completo('Dimitri', 'Lumin'), 'M', 2200.00, DATE '1985-04-29')) --organizador e supervisor
+-- INTO tb_funcionario VALUES(tp_funcionario(12345678944, (SELECT REF(f) FROM tb_funcionario f WHERE f.cpf = 12155978954), tp_nome_completo('Rafael', 'Ferreira'), 'M', 2000.00, DATE '2000-12-07')) --organizador e supervisionado por 12155978954(Patrício)
+-- INTO tb_funcionario VALUES(tp_funcionario(12345678915, (SELECT REF(f) FROM tb_funcionario f WHERE f.cpf = 12045665144), tp_nome_completo('Paula', 'Ferreira'), 'F', 2000.00, DATE '2001-08-30')) --organizador e supervisionado por 12045665144(Roberta)
+-- INTO tb_funcionario VALUES(tp_funcionario(13348678906, (SELECT REF(f) FROM tb_funcionario f WHERE f.cpf = 12745278910), tp_nome_completo('Juliety', 'Pinheiro'), 'O', 2000.00, DATE '1999-10-08')) --organizador e supervisionado por 12045665144(Dimitri)
 
-INTO tb_funcionario VALUES(tp_funcionario(12345678955, NULL, tp_nome_completo('Lucas', 'Walmir'), 'O', 1900.00, DATE '1982-08-22')) -- recepcionista e supervisor
-INTO tb_funcionario VALUES(tp_funcionario(12345678996, NULL, tp_nome_completo('Mariana', 'Silva'), 'F', 2000.00, DATE '1995-03-10')) --recepcionista e supervisor
-INTO tb_funcionario VALUES(tp_funcionario(12345678945, (SELECT REF(f) FROM tb_funcionario f WHERE f.cpf =12345678996), tp_nome_completo('Lucas', 'Santos'), 'M', 1500.00, DATE '1995-06-25')) --recepcionista e supervisionado por 12345678996(Mariana)
-INTO tb_funcionario VALUES(tp_funcionario(12345678966, (SELECT REF(f) FROM tb_funcionario f WHERE f.cpf =12345678955), tp_nome_completo('Joana', 'Darque'), 'F', 1800.00, DATE '1989-03-20')) -- recepcionista e supervisionado por 12345678955(Lucas WaLmir)
+-- INTO tb_funcionario VALUES(tp_funcionario(12345678955, NULL, tp_nome_completo('Lucas', 'Walmir'), 'O', 1900.00, DATE '1982-08-22')) -- recepcionista e supervisor
+-- INTO tb_funcionario VALUES(tp_funcionario(12345678996, NULL, tp_nome_completo('Mariana', 'Silva'), 'F', 2000.00, DATE '1995-03-10')) --recepcionista e supervisor
+-- INTO tb_funcionario VALUES(tp_funcionario(12345678945, (SELECT REF(f) FROM tb_funcionario f WHERE f.cpf =12345678996), tp_nome_completo('Lucas', 'Santos'), 'M', 1500.00, DATE '1995-06-25')) --recepcionista e supervisionado por 12345678996(Mariana)
+-- INTO tb_funcionario VALUES(tp_funcionario(12345678966, (SELECT REF(f) FROM tb_funcionario f WHERE f.cpf =12345678955), tp_nome_completo('Joana', 'Darque'), 'F', 1800.00, DATE '1989-03-20')) -- recepcionista e supervisionado por 12345678955(Lucas WaLmir)
 
-INTO tb_funcionario VALUES(tp_funcionario(98421823588, NULL, tp_nome_completo('Rafaela', 'Gomes'), 'F', 3000.00, DATE '1990-12-21')) --vendedor e supervisor
-INTO tb_funcionario VALUES(tp_funcionario(12345678988, (SELECT REF(f) FROM tb_funcionario f WHERE f.cpf = 98421823588), tp_nome_completo('Pietra', 'Silva'), 'F', 1700.00, DATE '1990-07-21')) --vendedor e supervisionado por  98421823588(Rafaela)
-INTO tb_funcionario VALUES(tp_funcionario(55123645979, (SELECT REF(f) FROM tb_funcionario f WHERE f.cpf = 98421823588), tp_nome_completo('David', 'Pierre'), 'M', 1700.00, DATE '2000-01-10')) --vendedor e supervisionado por 98421823588(Rafaela)
-INTO tb_funcionario VALUES(tp_funcionario(89758702589, (SELECT REF(f) FROM tb_funcionario f WHERE f.cpf = 98421823588), tp_nome_completo('Rosa', 'Valverde'), 'F', 1700.00, DATE '1995-02-28')) --vendedor e supervisionado por 98421823588(Rafaela)
-INTO tb_funcionario VALUES(tp_funcionario(49212206713, (SELECT REF(f) FROM tb_funcionario f WHERE f.cpf = 98421823588), tp_nome_completo('Claudemir', 'Alencar'),'M', 1700.00, DATE '1987-08-18')) --vendedor e supervisionado por 98421823588(Rafaela)
-SELECT 1 FROM dual;
+-- INTO tb_funcionario VALUES(tp_funcionario(98421823588, NULL, tp_nome_completo('Rafaela', 'Gomes'), 'F', 3000.00, DATE '1990-12-21')) --vendedor e supervisor
+-- INTO tb_funcionario VALUES(tp_funcionario(12345678988, (SELECT REF(f) FROM tb_funcionario f WHERE f.cpf = 98421823588), tp_nome_completo('Pietra', 'Silva'), 'F', 1700.00, DATE '1990-07-21')) --vendedor e supervisionado por  98421823588(Rafaela)
+-- INTO tb_funcionario VALUES(tp_funcionario(55123645979, (SELECT REF(f) FROM tb_funcionario f WHERE f.cpf = 98421823588), tp_nome_completo('David', 'Pierre'), 'M', 1700.00, DATE '2000-01-10')) --vendedor e supervisionado por 98421823588(Rafaela)
+-- INTO tb_funcionario VALUES(tp_funcionario(89758702589, (SELECT REF(f) FROM tb_funcionario f WHERE f.cpf = 98421823588), tp_nome_completo('Rosa', 'Valverde'), 'F', 1700.00, DATE '1995-02-28')) --vendedor e supervisionado por 98421823588(Rafaela)
+-- INTO tb_funcionario VALUES(tp_funcionario(49212206713, (SELECT REF(f) FROM tb_funcionario f WHERE f.cpf = 98421823588), tp_nome_completo('Claudemir', 'Alencar'),'M', 1700.00, DATE '1987-08-18')) --vendedor e supervisionado por 98421823588(Rafaela)
+-- SELECT 1 FROM dual;
 
 -- Populando a tabela operador
 INSERT ALL
-INTO tb_operador VALUES(tp_funcionario(12345678932, NULL, 'José', 'Oliveira', 'M', 2000.00, DATE '1995-03-25'), (SELECT REF(a) FROM tb_atracao a WHERE a.nome_atracao = 'Montanha Russa'))
-INTO tb_operador VALUES(tp_funcionario(12345678956,(SELECT REF(f) FROM tb_funcionario f WHERE f.cpf = 12345678932), 'Ana', 'Santos', 'F', 1500.00, DATE '1998-07-25'), (SELECT REF(a) FROM tb_atracao a WHERE a.nome_atracao = 'Carrossel'))
-INTO tb_operador VALUES(tp_funcionario(12344567890, NULL, 'Júlia', 'Silva', 'F', 2000.00, DATE '1990-05-21'), (SELECT REF(a) FROM tb_atracao a WHERE a.nome_atracao = 'Splash'))
-INTO tb_operador VALUES(tp_funcionario(21344556781,(SELECT REF(f) FROM tb_funcionario f WHERE f.cpf = 12344567890), 'Pietro', 'Brito', 'M', 1700.00, DATE '1999-07-21'), (SELECT REF(a) FROM tb_atracao a WHERE a.nome_atracao = 'Barca'))
-INTO tb_operador VALUES(tp_funcionario(12345678978,(SELECT REF(f) FROM tb_funcionario f WHERE f.cpf = 12345678932), 'Pedro', 'Ferreira', 'M', 1800.00, DATE '1992-12-30'), (SELECT REF(a) FROM tb_atracao a WHERE a.nome_atracao = 'Thunderbolt'))
-INTO tb_operador VALUES(tp_funcionario(31344556781,(SELECT REF(f) FROM tb_funcionario f WHERE f.cpf = 12345678932), 'Jorge', 'Lucas', 'M', 1700.00, DATE '2000-05-22'), (SELECT REF(a) FROM tb_atracao a WHERE a.nome_atracao = 'Trem Fantasma'))
-INTO tb_operador VALUES(tp_funcionario(44344556781, NULL, 'Barbára', 'Teixeira', 'F', 2000.00, DATE '1998-03-20'), (SELECT REF(a) FROM tb_atracao a WHERE a.nome_atracao = 'Carrinho de Bate-Bate'))
-INTO tb_operador VALUES(tp_funcionario(55662509123,(SELECT REF(f) FROM tb_funcionario f WHERE f.cpf = 44344556781), 'Márcio', 'Santos', 'M', 1800.00, DATE '1995-06-25'), (SELECT REF(a) FROM tb_atracao a WHERE a.nome_atracao = 'Elefante'))
-INTO tb_operador VALUES(tp_funcionario(12345678901,(SELECT REF(f) FROM tb_funcionario f WHERE f.cpf = 44344556781), 'Diego', 'Medeiros', 'M', 2000.00, DATE '1996-03-10'), (SELECT REF(a) FROM tb_atracao a WHERE a.nome_atracao = 'Pandeiro'))
-INTO tb_operador VALUES(tp_funcionario(12345678977,(SELECT REF(f) FROM tb_funcionario f WHERE f.cpf = 44344556781), 'Marcone', 'Pereira', 'M', 1800.00, DATE '2000-02-09'), (SELECT REF(a) FROM tb_atracao a WHERE a.nome_atracao = 'Roda Gigante'))
-INTO tb_operador VALUES(tp_funcionario(12345678903,(SELECT REF(f) FROM tb_funcionario f WHERE f.cpf = 12344567890), 'Kailane', 'Santana', 'F', 1800.00, DATE '1997-06-30'), (SELECT REF(a) FROM tb_atracao a WHERE a.nome_atracao = 'Castelo Pula-Pula'))
-INTO tb_operador VALUES(tp_funcionario(00865708463, NULL, 'Alex', 'Rodrigues', 'M', 2000.00, DATE '2002-04-26'), (SELECT REF(a) FROM tb_atracao a WHERE a.nome_atracao = 'Avião Mágico'))
-INTO tb_operador VALUES(tp_funcionario(31415926535,(SELECT REF(f) FROM tb_funcionario f WHERE f.cpf = 00865708463), 'Pierre', 'Eratóstenes', 'M', 2000.00, DATE '1984-05-18'), (SELECT REF(a) FROM tb_atracao a WHERE a.nome_atracao = 'Mansão do Terror'))
-INTO tb_operador VALUES(tp_funcionario(50596374158,(SELECT REF(f) FROM tb_funcionario f WHERE f.cpf = 00865708463), 'Harrison', 'Pereira', 'M', 1800.00, DATE '1998-01-01'), (SELECT REF(a) FROM tb_atracao a WHERE a.nome_atracao = 'Tiro ao Alvo'))
-INTO tb_operador VALUES(tp_funcionario(12345678999,(SELECT REF(f) FROM tb_funcionario f WHERE f.cpf = 12344567890), 'Miguel', 'Santos', 'M', 1700.00, DATE '1988-07-21'), (SELECT REF(a) FROM tb_atracao a WHERE a.nome_atracao = 'Badoque'))
-INTO tb_operador VALUES(tp_funcionario(75315968423,(SELECT REF(f) FROM tb_funcionario f WHERE f.cpf = 00865708463), 'Italo', 'Sena', 'M', 1800.00, DATE '1997-07-21'), (SELECT REF(a) FROM tb_atracao a WHERE a.nome_atracao = 'Escalador'))
-INTO tb_operador VALUES(tp_funcionario(15375964701,(SELECT REF(f) FROM tb_funcionario f WHERE f.cpf = 00865708463), 'Fernando', 'Bragança', 'M', 2000.00, DATE '1995-09-18'), (SELECT REF(a) FROM tb_atracao a WHERE a.nome_atracao = 'Escorregador'))
+INTO tb_operador VALUES(tp_operador(12345678932, NULL, 'José', 'Oliveira', 'M', 2000.00, DATE '1995-03-25', (SELECT REF(a) FROM tb_atracao a WHERE a.nome_atracao = 'Montanha Russa')))
+INTO tb_operador VALUES(tp_operador(12345678956,(SELECT REF(o) FROM tb_operador o WHERE o.cpf = 12345678932), 'Ana', 'Santos', 'F', 1500.00, DATE '1998-07-25', (SELECT REF(a) FROM tb_atracao a WHERE a.nome_atracao = 'Carrossel')))
+INTO tb_operador VALUES(tp_operador(12344567890, NULL, 'Júlia', 'Silva', 'F', 2000.00, DATE '1990-05-21', (SELECT REF(a) FROM tb_atracao a WHERE a.nome_atracao = 'Splash')))
+INTO tb_operador VALUES(tp_operador(21344556781,(SELECT REF(o) FROM tb_operador o WHERE o.cpf = 12344567890), 'Pietro', 'Brito', 'M', 1700.00, DATE '1999-07-21', (SELECT REF(a) FROM tb_atracao a WHERE a.nome_atracao = 'Barca')))
+INTO tb_operador VALUES(tp_operador(12345678978,(SELECT REF(o) FROM tb_operador o WHERE o.cpf = 12345678932), 'Pedro', 'Ferreira', 'M', 1800.00, DATE '1992-12-30', (SELECT REF(a) FROM tb_atracao a WHERE a.nome_atracao = 'Thunderbolt')))
+INTO tb_operador VALUES(tp_operador(31344556781,(SELECT REF(o) FROM tb_operador o WHERE o.cpf = 12345678932), 'Jorge', 'Lucas', 'M', 1700.00, DATE '2000-05-22', (SELECT REF(a) FROM tb_atracao a WHERE a.nome_atracao = 'Trem Fantasma')))
+INTO tb_operador VALUES(tp_operador(44344556781, NULL, 'Barbára', 'Teixeira', 'F', 2000.00, DATE '1998-03-20', (SELECT REF(a) FROM tb_atracao a WHERE a.nome_atracao = 'Carrinho de Bate-Bate')))
+INTO tb_operador VALUES(tp_operador(55662509123,(SELECT REF(o) FROM tb_operador o WHERE o.cpf = 44344556781), 'Márcio', 'Santos', 'M', 1800.00, DATE '1995-06-25', (SELECT REF(a) FROM tb_atracao a WHERE a.nome_atracao = 'Elefante')))
+INTO tb_operador VALUES(tp_operador(12345678901,(SELECT REF(o) FROM tb_operador o WHERE o.cpf = 44344556781), 'Diego', 'Medeiros', 'M', 2000.00, DATE '1996-03-10', (SELECT REF(a) FROM tb_atracao a WHERE a.nome_atracao = 'Pandeiro')))
+INTO tb_operador VALUES(tp_operador(12345678977,(SELECT REF(o) FROM tb_operador o WHERE o.cpf = 44344556781), 'Marcone', 'Pereira', 'M', 1800.00, DATE '2000-02-09', (SELECT REF(a) FROM tb_atracao a WHERE a.nome_atracao = 'Roda Gigante')))
+INTO tb_operador VALUES(tp_operador(12345678903,(SELECT REF(o) FROM tb_operador o WHERE o.cpf = 12344567890), 'Kailane', 'Santana', 'F', 1800.00, DATE '1997-06-30', (SELECT REF(a) FROM tb_atracao a WHERE a.nome_atracao = 'Castelo Pula-Pula')))
+INTO tb_operador VALUES(tp_operador(00865708463, NULL, 'Alex', 'Rodrigues', 'M', 2000.00, DATE '2002-04-26', (SELECT REF(a) FROM tb_atracao a WHERE a.nome_atracao = 'Avião Mágico')))
+INTO tb_operador VALUES(tp_operador(31415926535,(SELECT REF(o) FROM tb_operador o WHERE o.cpf = 00865708463), 'Pierre', 'Eratóstenes', 'M', 2000.00, DATE '1984-05-18', (SELECT REF(a) FROM tb_atracao a WHERE a.nome_atracao = 'Mansão do Terror')))
+INTO tb_operador VALUES(tp_operador(50596374158,(SELECT REF(o) FROM tb_operador o WHERE o.cpf = 00865708463), 'Harrison', 'Pereira', 'M', 1800.00, DATE '1998-01-01', (SELECT REF(a) FROM tb_atracao a WHERE a.nome_atracao = 'Tiro ao Alvo')))
+INTO tb_operador VALUES(tp_operador(12345678999,(SELECT REF(o) FROM tb_operador o WHERE o.cpf = 12344567890), 'Miguel', 'Santos', 'M', 1700.00, DATE '1988-07-21', (SELECT REF(a) FROM tb_atracao a WHERE a.nome_atracao = 'Badoque')))
+INTO tb_operador VALUES(tp_operador(75315968423,(SELECT REF(o) FROM tb_operador o WHERE o.cpf = 00865708463), 'Italo', 'Sena', 'M', 1800.00, DATE '1997-07-21', (SELECT REF(a) FROM tb_atracao a WHERE a.nome_atracao = 'Escalador')))
+INTO tb_operador VALUES(tp_operador(15375964701,(SELECT REF(o) FROM tb_operador o WHERE o.cpf = 00865708463), 'Fernando', 'Bragança', 'M', 2000.00, DATE '1995-09-18', (SELECT REF(a) FROM tb_atracao a WHERE a.nome_atracao = 'Escorregador')))
 SELECT 1 FROM dual;
 
 -- Populando a tabela recepcionista
 INSERT ALL
-INTO tb_recepcionista VALUES(tp_funcionario(12345678955, NULL, 'Lucas', 'Walmir', 'O', 1900.00, DATE '1982-08-22'))
-INTO tb_recepcionista VALUES(tp_funcionario(12345678996, NULL, 'Mariana', 'Silva', 'F', 2000.00, DATE '1995-03-10'))
-INTO tb_recepcionista VALUES(tp_funcionario(12345678945, (SELECT REF(f) FROM tb_funcionario f WHERE f.cpf =12345678996), 'Lucas', 'Santos', 'M', 1500.00, DATE '1995-06-25'))
-INTO tb_recepcionista VALUES(tp_funcionario(12345678966, (SELECT REF(f) FROM tb_funcionario f WHERE f.cpf =12345678955), 'Joana', 'Darque', 'F', 1800.00, DATE '1989-03-20'))
+INTO tb_recepcionista VALUES(tp_recepcionista(12345678955, NULL, 'Lucas', 'Walmir', 'O', 1900.00, DATE '1982-08-22'))
+INTO tb_recepcionista VALUES(tp_recepcionista(12345678996, NULL, 'Mariana', 'Silva', 'F', 2000.00, DATE '1995-03-10'))
+INTO tb_recepcionista VALUES(tp_recepcionista(12345678945, (SELECT REF(r) FROM tb_recepcionista r WHERE r.cpf =12345678996), 'Lucas', 'Santos', 'M', 1500.00, DATE '1995-06-25'))
+INTO tb_recepcionista VALUES(tp_recepcionista(12345678966, (SELECT REF(r) FROM tb_recepcionista r WHERE r.cpf =12345678955), 'Joana', 'Darque', 'F', 1800.00, DATE '1989-03-20'))
 SELECT 1 FROM dual;
 
 -- Populando a tabela organizador
 INSERT ALL
-INTO tb_organizador VALUES(tp_funcionario(12155978954, NULL, 'Patrício', 'Petrúcio', 'M', 2200.00, DATE '1978-10-20'))
-INTO tb_organizador VALUES(tp_funcionario(12045665144, NULL, 'Roberta', 'Cândido', 'F', 2200.00, DATE '1981-05-05'))
-INTO tb_organizador VALUES(tp_funcionario(12745278910, NULL, 'Dimitri', 'Lumin', 'M', 2200.00, DATE '1985-04-29'))
-INTO tb_organizador VALUES(tp_funcionario(12345678944, (SELECT REF(f) FROM tb_funcionario f WHERE f.cpf = 12155978954), 'Rafael', 'Ferreira', 'M', 2000.00, DATE '2000-12-07'))
-INTO tb_organizador VALUES(tp_funcionario(12345678915, (SELECT REF(f) FROM tb_funcionario f WHERE f.cpf = 12045665144), 'Paula', 'Ferreira', 'F', 2000.00, DATE '2001-08-30'))
-INTO tb_organizador VALUES(tp_funcionario(13348678906, (SELECT REF(f) FROM tb_funcionario f WHERE f.cpf = 12745278910), 'Juliety', 'Pinheiro', 'O', 2000.00, DATE '1999-10-08'))
+INTO tb_organizador VALUES(tp_organizador(12155978954, NULL, 'Patrício', 'Petrúcio', 'M', 2200.00, DATE '1978-10-20'))
+INTO tb_organizador VALUES(tp_organizador(12045665144, NULL, 'Roberta', 'Cândido', 'F', 2200.00, DATE '1981-05-05'))
+INTO tb_organizador VALUES(tp_organizador(12745278910, NULL, 'Dimitri', 'Lumin', 'M', 2200.00, DATE '1985-04-29'))
+INTO tb_organizador VALUES(tp_organizador(12345678944, (SELECT REF(o) FROM tb_organizador o WHERE o.cpf = 12155978954), 'Rafael', 'Ferreira', 'M', 2000.00, DATE '2000-12-07'))
+INTO tb_organizador VALUES(tp_organizador(12345678915, (SELECT REF(o) FROM tb_organizador o WHERE o.cpf = 12045665144), 'Paula', 'Ferreira', 'F', 2000.00, DATE '2001-08-30'))
+INTO tb_organizador VALUES(tp_organizador(13348678906, (SELECT REF(o) FROM tb_organizador o WHERE o.cpf = 12745278910), 'Juliety', 'Pinheiro', 'O', 2000.00, DATE '1999-10-08'))
 SELECT 1 FROM dual;
 
 -- Populando a tabela vendedor
 INSERT ALL
-INTO tb_vendedor VALUES(tp_funcionario(98421823588, NULL, 'Rafaela', 'Gomes', 'F', 3000.00, DATE '1990-12-21'))
-INTO tb_vendedor VALUES(tp_funcionario(12345678988, (SELECT REF(f) FROM tb_funcionario f WHERE f.cpf = 98421823588), 'Pietra', 'Silva', 'F', 1700.00, DATE '1990-07-21'))
-INTO tb_vendedor VALUES(tp_funcionario(55123645979, (SELECT REF(f) FROM tb_funcionario f WHERE f.cpf = 98421823588), 'David', 'Pierre', 'M', 1700.00, DATE '2000-01-10'))
-INTO tb_vendedor VALUES(tp_funcionario(89758702589, (SELECT REF(f) FROM tb_funcionario f WHERE f.cpf = 98421823588), 'Rosa', 'Valverde', 'F', 1700.00, DATE '1995-02-28'))
-INTO tb_vendedor VALUES(tp_funcionario(49212206713, (SELECT REF(f) FROM tb_funcionario f WHERE f.cpf = 98421823588), 'Claudemir', 'Alencar','M', 1700.00, DATE '1987-08-18'))
+INTO tb_vendedor VALUES(tp_vendedor(98421823588, NULL, 'Rafaela', 'Gomes', 'F', 3000.00, DATE '1990-12-21'))
+INTO tb_vendedor VALUES(tp_vendedor(12345678988, (SELECT REF(v) FROM tb_vendedor v WHERE v.cpf = 98421823588), 'Pietra', 'Silva', 'F', 1700.00, DATE '1990-07-21'))
+INTO tb_vendedor VALUES(tp_vendedor(55123645979, (SELECT REF(v) FROM tb_vendedor v WHERE v.cpf = 98421823588), 'David', 'Pierre', 'M', 1700.00, DATE '2000-01-10'))
+INTO tb_vendedor VALUES(tp_vendedor(89758702589, (SELECT REF(v) FROM tb_vendedor v WHERE v.cpf = 98421823588), 'Rosa', 'Valverde', 'F', 1700.00, DATE '1995-02-28'))
+INTO tb_vendedor VALUES(tp_vendedor(49212206713, (SELECT REF(v) FROM tb_vendedor v WHERE v.cpf = 98421823588), 'Claudemir', 'Alencar','M', 1700.00, DATE '1987-08-18'))
 SELECT 1 FROM dual;
 
 -- Populando a tabela ingresso

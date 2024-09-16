@@ -73,7 +73,7 @@ CREATE OR REPLACE TYPE tp_funcionario AS OBJECT (
     salario DECIMAL(8,2),
     data_de_nascimento DATE,
     NOT INSTANTIABLE MEMBER PROCEDURE exibir_info(SELF tp_funcionario)
-) NOT FINAL;
+) NOT FINAL NOT INSTANTIABLE;
 /
 
 CREATE OR REPLACE TYPE BODY tp_funcionario AS
