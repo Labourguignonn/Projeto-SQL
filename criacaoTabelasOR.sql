@@ -247,25 +247,29 @@ CREATE TABLE tb_vendedor OF tp_vendedor (
 );
 
 CREATE OR REPLACE TYPE tp_ingresso AS OBJECT (
-    id_ingresso NUMBER,
-    data_compra DATE,
-    valor DECIMAL(8,2),
-    visitante REF tp_visitante
+    codigo NUMBER,
+    cpf_visitante REF tp_visitante,
+    tipo_de_ingresso VARCHAR2(8),
+    metodo_pagto VARCHAR2(8),
+    data_compra DATE
 );
 /
 
 CREATE TABLE tb_ingresso OF tp_ingresso (
-    CONSTRAINT ingresso_pk PRIMARY KEY (id_ingresso)
+    CONSTRAINT ingresso_pk PRIMARY KEY (codigo),
+    CONSTRAINT ingresso_tipo_check CHECK (tipo_de_ingresso IN ('meia', 'inteira')),
+    CONSTRAINT ingresso_metodo_pagto_check CHECK (metodo_pagto IN ('pix', 'dinheiro', 'credito', 'debito', 'vale', 'cortesia')),
+    data_compra NOT NULL
 );
 
-CREATE OR REPLACE TYPE tp_itens_comprados AS OBJECT (
+CREATE OR REPLACE TYPE tp_item AS OBJECT (
     id_compra NUMBER(9),
     nome_item VARCHAR2(35)
 );
 /
 
 -- Criando a tabela aninhada para armazenar os itens comprados
-CREATE OR REPLACE TYPE tp_itens_comprados_nest AS TABLE OF tp_itens_comprados;
+CREATE OR REPLACE TYPE tp_nt_itens AS TABLE OF tp_item;
 /
 
 CREATE OR REPLACE TYPE tp_compra AS OBJECT (
@@ -273,11 +277,8 @@ CREATE OR REPLACE TYPE tp_compra AS OBJECT (
     data_compra DATE,
     valor_total DECIMAL(8,2),
     metodo_pagto VARCHAR2(17),
-    itens_comprados tp_itens_comprados_nest
-);
-/
-
-NESTED TABLE itens_comprados STORE AS tb_itens_comprados_nested;
+    itens_comprados tp_nt_itens
+) NESTED TABLE itens_comprados STORE AS tb_nt_itens;
 
 CREATE TABLE tb_compra OF tp_compra (
     CONSTRAINT compra_pk PRIMARY KEY (id)
@@ -285,7 +286,8 @@ CREATE TABLE tb_compra OF tp_compra (
 
 CREATE OR REPLACE TYPE tp_info_evento AS OBJECT (
     nome VARCHAR2(50),
-    publico_alvo VARCHAR2(8)
+    publico_alvo VARCHAR2(8),
+    descricao VARCHAR2(60)
 );
 /
 
@@ -300,7 +302,7 @@ CREATE OR REPLACE TYPE tp_evento AS OBJECT (
     info_evento REF tp_info_evento, 
     zona VARCHAR2(1),
     complemento VARCHAR2(60), -- complemento do evento
-    data_evento DATE NOT NULL,
+    data_evento DATE,
     ORDER MEMBER FUNCTION compare_date (other tp_evento) RETURN NUMBER
 );
 /
@@ -321,21 +323,21 @@ END;
 
 CREATE TABLE tb_evento OF tp_evento (
     CONSTRAINT evento_pk PRIMARY KEY (id),
-    CONSTRAINT evento_zona_check CHECK (zona IN ('A', 'B', 'C', 'D', 'E'))
+    CONSTRAINT evento_zona_check CHECK (zona IN ('A', 'B', 'C', 'D', 'E')),
+    data_evento NOT NULL
 );
 
 CREATE OR REPLACE TYPE tp_acompanhante AS OBJECT (
-    cpf_visitante NUMBER(11),
-    num_acompanhantes NUMBER(2),
-    nome VARCHAR2(20),
-    sobrenome VARCHAR2(50),
+    cpf_visitante REF tp_visitante,
+    num_acompanhante NUMBER(2),
+    nome_completo tp_nome_completo,
     idade NUMBER,
     altura DECIMAL(3,2)
 );
 /
 
 CREATE TABLE tb_acompanhante OF tp_acompanhante (
-    CONSTRAINT acompanhante_pk PRIMARY KEY (cpf_visitante, num_acompanhantes),
+    CONSTRAINT acompanhante_pk PRIMARY KEY (cpf_visitante, num_acompanhante),
     CONSTRAINT acompanhante_altura_check CHECK (altura > 0)
 );
 
@@ -351,12 +353,13 @@ CREATE TABLE tb_aquisicao OF tp_aquisicao (
 
 CREATE OR REPLACE TYPE tp_utilizar AS OBJECT(
     nome_atracao REF tp_atracao,
-    cpf_visitante REF tp_visitante
+    cpf_visitante REF tp_visitante,
+    horario TIMESTAMP
 );
 /
 
 CREATE TABLE tb_utilizar OF tp_utilizar (
-    CONSTRAINT utilizar_pk PRIMARY KEY (nome_atracao, cpf_visitante)
+    CONSTRAINT utilizar_pk PRIMARY KEY (nome_atracao, cpf_visitante, horario)
 ) WITH ROWID;
 
 
