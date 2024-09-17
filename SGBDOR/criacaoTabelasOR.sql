@@ -75,64 +75,43 @@ CREATE OR REPLACE TYPE tp_funcionario AS OBJECT (
     NOT INSTANTIABLE MEMBER PROCEDURE exibir_info(SELF tp_funcionario)
 ) NOT FINAL NOT INSTANTIABLE;
 /
-
-CREATE OR REPLACE TYPE BODY tp_funcionario AS
-    MEMBER PROCEDURE exibir_info(SELF tp_funcionario) IS
-    BEGIN
-        DBMS_OUTPUT.PUT_LINE('Informações do Funcionário');
-        DBMS_OUTPUT.PUT_LINE('CPF: ' || TO_CHAR(cpf));
-        DBMS_OUTPUT.PUT_LINE('Nome Completo: ' || nome_completo.nome || ' ' || nome_completo.sobrenome);
-        DBMS_OUTPUT.PUT_LINE('Sexo: ' || sexo);
-        DBMS_OUTPUT.PUT_LINE('Data de Nascimento: ' || TO_CHAR(data_de_nascimento, 'DD/MM/YYYY'));
-        DBMS_OUTPUT.PUT_LINE('Salário: R$' || TO_CHAR(salario, '999999.99'));
-        DBMS_OUTPUT.PUT_LINE('Supervisor: ' || NVL(TO_CHAR(cpf_supervisor), 'Sem Supervisor'));
-    END;
-END;
-/
-
-CREATE TABLE tb_funcionario OF tp_funcionario (
-    CONSTRAINT funcionario_pk PRIMARY KEY (cpf),
-    CONSTRAINT funcionario_sexo_check CHECK (sexo IN ('M', 'F', 'O')),
-    CONSTRAINT funcionario_supervisor_check CHECK (cpf <> DEREF(cpf_supervisor).cpf)
-);
-
--- Criação do tipo operador, do corpo do tipo e da tabela
 CREATE OR REPLACE TYPE tp_operador UNDER tp_funcionario (
-    atracao REF tp_atracao SCOPE IS tb_atracao,
-    CONSTRUCTOR FUNCTION tp_operador(f tp_funcionario) RETURN SELF AS RESULT,
+    atracao REF tp_atracao,
+    CONSTRUCTOR FUNCTION tp_operador(o tp_operador) RETURN SELF AS RESULT,
     OVERRIDING MEMBER PROCEDURE exibir_info(SELF tp_operador)
 ) FINAL;
 /
 
 CREATE OR REPLACE TYPE BODY tp_operador AS
-    CONSTRUCTOR FUNCTION tp_operador(f tp_funcionario) RETURN SELF AS RESULT IS
+    CONSTRUCTOR FUNCTION tp_operador(o tp_operador) RETURN SELF AS RESULT IS
     BEGIN
-        cpf := f.cpf;
-        cpf_supervisor := f.cpf_supervisor;
-        nome_completo := f.nome_completo;
-        sexo := f.sexo;
-        salario := f.salario;
-        data_de_nascimento := f.data_de_nascimento;
-        RETURN SELF;
+        cpf := o.cpf;
+        cpf_supervisor := o.cpf_supervisor;
+        nome_completo := o.nome_completo;
+        sexo := o.sexo;
+        salario := o.salario;
+        data_de_nascimento := o.data_de_nascimento;
+        atracao := o.atracao;
+        RETURN;
     END;
 
-    OVERRIDING MEMBER PROCEDURE exibir_info(SELF tp_operador) IS  -- Corrigido o tipo de SELF
+    OVERRIDING MEMBER PROCEDURE exibir_info(SELF tp_operador) IS
     BEGIN
         DBMS_OUTPUT.PUT_LINE('Informações do Operador');
         DBMS_OUTPUT.PUT_LINE('CPF: ' || TO_CHAR(cpf));
         DBMS_OUTPUT.PUT_LINE('Nome Completo: ' || nome_completo.nome || ' ' || nome_completo.sobrenome);
         DBMS_OUTPUT.PUT_LINE('Sexo: ' || sexo);
         DBMS_OUTPUT.PUT_LINE('Data de Nascimento: ' || TO_CHAR(data_de_nascimento, 'DD/MM/YYYY'));
-        DBMS_OUTPUT.PUT_LINE('Salário: ' || 'R$' || TO_CHAR(salario, '999999.99'));  -- Formatação ajustada
-        DBMS_OUTPUT.PUT_LINE('Atração Operada: ' || atracao);
-        DBMS_OUTPUT.PUT_LINE('Supervisor: ' || NVL(TO_CHAR(cpf_supervisor), 'Não possui supervisor'));  -- Ajustado cpf_supervisor
+        DBMS_OUTPUT.PUT_LINE('Salário: ' || 'R$' || TO_CHAR(salario, '999999.99'));
     END;
 END;
 /
 
 CREATE TABLE tb_operador OF tp_operador (
-    CONSTRAINT operador_pk PRIMARY KEY (cpf),
-    CONSTRAINT operador_supervisor_check CHECK (cpf <> DEREF(cpf_supervisor).cpf)
+    cpf PRIMARY KEY,
+    cpf_supervisor WITH ROWID REFERENCES tb_operador,
+    CONSTRAINT operador_sexo_check CHECK (sexo IN ('M', 'F', 'O')),
+    atracao SCOPE IS tb_atracao
 );
 
 -- Criação do tipo recepcionista, do corpo do tipo e da tabela
@@ -151,7 +130,7 @@ CREATE OR REPLACE TYPE BODY tp_recepcionista AS
         sexo := f.sexo;
         salario := f.salario;
         data_de_nascimento := f.data_de_nascimento;
-        RETURN SELF;
+        RETURN;
     END;
 
     OVERRIDING MEMBER PROCEDURE exibir_info(SELF tp_recepcionista) IS
@@ -161,15 +140,15 @@ CREATE OR REPLACE TYPE BODY tp_recepcionista AS
         DBMS_OUTPUT.PUT_LINE('Nome Completo: ' || nome_completo.nome || ' ' || nome_completo.sobrenome);
         DBMS_OUTPUT.PUT_LINE('Sexo: ' || sexo);
         DBMS_OUTPUT.PUT_LINE('Data de Nascimento: ' || TO_CHAR(data_de_nascimento, 'DD/MM/YYYY'));
-        DBMS_OUTPUT.PUT_LINE('Salário: ' || 'R$' || TO_CHAR(salario, '999999.99'));  -- Formatação ajustada
-        DBMS_OUTPUT.PUT_LINE('Supervisor: ' || NVL(TO_CHAR(cpf_supervisor), 'Não possui supervisor'));  -- Ajustado cpf_supervisor
+        DBMS_OUTPUT.PUT_LINE('Salário: ' || 'R$' || TO_CHAR(salario, '999999.99'));
     END;
 END;
 /
 
 CREATE TABLE tb_recepcionista OF tp_recepcionista (
-    CONSTRAINT recepcionista_pk PRIMARY KEY (cpf),
-    CONSTRAINT recepcionista_supervisor_check CHECK (cpf <> DEREF(cpf_supervisor).cpf)
+    cpf PRIMARY KEY,
+    cpf_supervisor WITH ROWID REFERENCES tb_recepcionista,
+    CONSTRAINT recepcionista_sexo_check CHECK (sexo IN ('M', 'F', 'O'))
 );
 
 -- Criação do tipo organizador, do corpo do tipo e da tabela
@@ -188,7 +167,7 @@ CREATE OR REPLACE TYPE BODY tp_organizador AS
         sexo := f.sexo;
         salario := f.salario;
         data_de_nascimento := f.data_de_nascimento;
-        RETURN SELF;
+        RETURN;
     END;
 
     OVERRIDING MEMBER PROCEDURE exibir_info(SELF tp_organizador) IS
@@ -198,15 +177,15 @@ CREATE OR REPLACE TYPE BODY tp_organizador AS
         DBMS_OUTPUT.PUT_LINE('Nome Completo: ' || nome_completo.nome || ' ' || nome_completo.sobrenome);
         DBMS_OUTPUT.PUT_LINE('Sexo: ' || sexo);
         DBMS_OUTPUT.PUT_LINE('Data de Nascimento: ' || TO_CHAR(data_de_nascimento, 'DD/MM/YYYY'));
-        DBMS_OUTPUT.PUT_LINE('Salário: ' || 'R$' || TO_CHAR(salario, '999999.99'));  -- Formatação ajustada
-        DBMS_OUTPUT.PUT_LINE('Supervisor: ' || NVL(TO_CHAR(cpf_supervisor), 'Não possui supervisor'));  -- Ajustado cpf_supervisor
+        DBMS_OUTPUT.PUT_LINE('Salário: ' || 'R$' || TO_CHAR(salario, '999999.99'));
     END;
 END;
 /
 
 CREATE TABLE tb_organizador OF tp_organizador (
-    CONSTRAINT organizador_pk PRIMARY KEY (cpf),
-    CONSTRAINT organizador_supervisor_check CHECK (cpf <> DEREF(cpf_supervisor).cpf)
+    cpf PRIMARY KEY,
+    cpf_supervisor WITH ROWID REFERENCES tb_organizador,
+    CONSTRAINT organizador_sexo_check CHECK (sexo IN ('M', 'F', 'O'))
 );
 
 -- Criação do tipo vendedor, do corpo do tipo e da tabela
@@ -225,7 +204,7 @@ CREATE OR REPLACE TYPE BODY tp_vendedor AS
         sexo := f.sexo;
         salario := f.salario;
         data_de_nascimento := f.data_de_nascimento;
-        RETURN SELF;
+        RETURN;
     END;
 
     OVERRIDING MEMBER PROCEDURE exibir_info(SELF tp_vendedor) IS
@@ -235,19 +214,19 @@ CREATE OR REPLACE TYPE BODY tp_vendedor AS
         DBMS_OUTPUT.PUT_LINE('Nome Completo: ' || nome_completo.nome || ' ' || nome_completo.sobrenome);
         DBMS_OUTPUT.PUT_LINE('Sexo: ' || sexo);
         DBMS_OUTPUT.PUT_LINE('Data de Nascimento: ' || TO_CHAR(data_de_nascimento, 'DD/MM/YYYY'));
-        DBMS_OUTPUT.PUT_LINE('Salário: ' || 'R$' || TO_CHAR(salario, '999999.99'));  -- Formatação ajustada
-        DBMS_OUTPUT.PUT_LINE('Supervisor: ' || NVL(TO_CHAR(cpf_supervisor), 'Não possui supervisor'));  -- Ajustado cpf_supervisor
+        DBMS_OUTPUT.PUT_LINE('Salário: ' || 'R$' || TO_CHAR(salario, '999999.99'));
     END;
 END;
 /
 
 CREATE TABLE tb_vendedor OF tp_vendedor (
-    CONSTRAINT vendedor_pk PRIMARY KEY (cpf),
-    CONSTRAINT vendedor_supervisor_check CHECK (cpf <> DEREF(cpf_supervisor).cpf)
+    cpf PRIMARY KEY,
+    cpf_supervisor WITH ROWID REFERENCES tb_vendedor,
+    CONSTRAINT vendedor_sexo_check CHECK (sexo IN ('M', 'F', 'O'))
 );
 
 CREATE OR REPLACE TYPE tp_ingresso AS OBJECT (
-    codigo NUMBER,
+    codigo NUMBER(7),
     cpf_visitante REF tp_visitante,
     tipo_de_ingresso VARCHAR2(8),
     metodo_pagto VARCHAR2(8),
@@ -278,11 +257,15 @@ CREATE OR REPLACE TYPE tp_compra AS OBJECT (
     valor_total DECIMAL(8,2),
     metodo_pagto VARCHAR2(17),
     itens_comprados tp_nt_itens
-) NESTED TABLE itens_comprados STORE AS tb_nt_itens;
+); 
+/
 
 CREATE TABLE tb_compra OF tp_compra (
-    CONSTRAINT compra_pk PRIMARY KEY (id)
-);
+    id PRIMARY KEY,
+    data_compra NOT NULL,
+    valor_total NOT NULL,
+    CONSTRAINT compra_metodo_pagto_check CHECK (metodo_pagto IN ('pix', 'credito', 'debito', 'dinheiro', 'vale', 'cortesia'))
+) NESTED TABLE itens_comprados STORE AS tb_itens_comprados;
 
 CREATE OR REPLACE TYPE tp_info_evento AS OBJECT (
     nome VARCHAR2(50),
@@ -328,7 +311,7 @@ CREATE TABLE tb_evento OF tp_evento (
 );
 
 CREATE OR REPLACE TYPE tp_acompanhante AS OBJECT (
-    cpf_visitante REF tp_visitante,
+    cpf_visitante NUMBER(11),
     num_acompanhante NUMBER(2),
     nome_completo tp_nome_completo,
     idade NUMBER,
@@ -336,40 +319,58 @@ CREATE OR REPLACE TYPE tp_acompanhante AS OBJECT (
 );
 /
 
+ALTER TYPE tp_acompanhante
+    ADD attribute(sexo VARCHAR2(1)) CASCADE;
+
 CREATE TABLE tb_acompanhante OF tp_acompanhante (
     CONSTRAINT acompanhante_pk PRIMARY KEY (cpf_visitante, num_acompanhante),
-    CONSTRAINT acompanhante_altura_check CHECK (altura > 0)
+    CONSTRAINT acompanhante_cpf_visitante_fk FOREIGN KEY (cpf_visitante) REFERENCES tb_visitante(cpf),
+    CONSTRAINT acompanhante_altura_check CHECK (altura > 0),
+    CONSTRAINT acompanhante_sexo_check CHECK (sexo IN ('M', 'F', 'O'))
 );
 
 CREATE OR REPLACE TYPE tp_aquisicao AS OBJECT (
-    cod_ingresso REF tp_ingresso,
+    cod_ingresso NUMBER(7),
     cpf_recepcionista REF tp_recepcionista
 );
 /
 
 CREATE TABLE tb_aquisicao OF tp_aquisicao (
-    CONSTRAINT aquisicao_pk PRIMARY KEY (cod_ingresso)
+    cod_ingresso PRIMARY KEY,
+    CONSTRAINT aquisicao_ingresso_fk FOREIGN KEY (cod_ingresso) REFERENCES tb_ingresso(codigo)
 );
 
 CREATE OR REPLACE TYPE tp_utilizar AS OBJECT(
-    nome_atracao REF tp_atracao,
-    cpf_visitante REF tp_visitante,
+    nome_atracao VARCHAR2(30),
+    cpf_visitante NUMBER(11),
     horario TIMESTAMP
 );
 /
 
+
 CREATE TABLE tb_utilizar OF tp_utilizar (
-    CONSTRAINT utilizar_pk PRIMARY KEY (nome_atracao, cpf_visitante, horario)
-) WITH ROWID;
+    CONSTRAINT utilizar_pk PRIMARY KEY (nome_atracao, cpf_visitante, horario),
+    CONSTRAINT utilizar_atracao_fk FOREIGN KEY (nome_atracao) REFERENCES tb_atracao(nome_atracao),
+    CONSTRAINT utilizar_visitante_fk FOREIGN KEY (cpf_visitante) REFERENCES tb_visitante(cpf)
+);
 
 
 CREATE OR REPLACE TYPE tp_realizar AS OBJECT (
-    id_compra REF tp_compra,
+    id_compra NUMBER(9),
     cpf_visitante REF tp_visitante,
     cpf_vendedor REF tp_vendedor
 );
 /
 
 CREATE TABLE tb_realizar OF tp_realizar (
-    CONSTRAINT realizar_pk PRIMARY KEY (id_compra)
+    id_compra PRIMARY KEY,
+    CONSTRAINT realizar_compra_fk FOREIGN KEY (id_compra) REFERENCES tb_compra(id),
+    cpf_visitante WITH ROWID REFERENCES tb_visitante,
+    cpf_vendedor WITH ROWID REFERENCES tb_vendedor
 );
+
+SELECT VALUE(t)
+FROM TABLE(SELECT c.itens_comprados
+    	   FROM tb_compra c
+    	   WHERE c.id = 505100001) t;
+/
