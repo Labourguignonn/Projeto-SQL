@@ -478,7 +478,7 @@ SELECT 1 FROM dual;
 -- Populando a tabela acompanhante
 INSERT ALL
 INTO acompanhante VALUES(11234567899, 1, 'Adalberto', 'Abreu', 72, 1.67)
-INTO acompanhante VALUES(11234567899, 2, 'Márcia', 'Melo', 33, 1.62)
+INTO acompanhante VALUES(11234567899, 2, 'Márcia', 'Melo', 33, 1.62,)
 INTO acompanhante VALUES(11234567899, 3, 'Ariovaldo', 'Astolfo', 48, 1.82)
 INTO acompanhante VALUES(12234567889, 1, 'William', 'Wallace', 12, 1.85)
 INTO acompanhante VALUES(12234567889, 2, 'Walter', 'White', 40, 1.75)
