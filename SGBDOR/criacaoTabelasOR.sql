@@ -75,6 +75,7 @@ CREATE OR REPLACE TYPE tp_funcionario AS OBJECT (
     NOT INSTANTIABLE MEMBER PROCEDURE exibir_info(SELF tp_funcionario)
 ) NOT FINAL NOT INSTANTIABLE;
 /
+
 CREATE OR REPLACE TYPE tp_operador UNDER tp_funcionario (
     atracao REF tp_atracao,
     CONSTRUCTOR FUNCTION tp_operador(o tp_operador) RETURN SELF AS RESULT,
