@@ -331,3 +331,78 @@ BEGIN
 	DBMS_OUTPUT.PUT_LINE(v_numVisitantesComSexoM);
 END;
 /
+
+-- Função para exibir informações do operador
+CREATE OR REPLACE FUNCTION tp_operador.exibir_info(p_cpf IN operador.cpf%TYPE)
+RETURN VARCHAR2 IS
+    v_info VARCHAR2(400);
+    v_ref REF operador;
+BEGIN
+    -- Refere-se ao operador e junta informações da tabela evento, se ele for responsável por algum
+    SELECT 'Operador: ' || DEREF(v_ref).nome || ', CPF: ' || DEREF(v_ref).cpf || 
+           ', Função: ' || DEREF(v_ref).funcao || ', Evento Atual: ' || NVL(e.nome_evento, 'Nenhum')
+    INTO v_info
+    FROM operador o
+    LEFT JOIN evento e ON o.evento_atual = e.codigo_evento
+    WHERE o.cpf = p_cpf;
+
+    RETURN v_info;
+END;
+/
+
+-- Função para exibir informações do recepcionista com mais detalhes
+CREATE OR REPLACE FUNCTION tp_recepcionista.exibir_info(p_cpf IN recepcionista.cpf%TYPE)
+RETURN VARCHAR2 IS
+    v_info VARCHAR2(400);
+    v_ref REF recepcionista;
+BEGIN
+    -- Refere-se ao recepcionista e conta o número de atendimentos que ele já realizou
+    SELECT 'Recepcionista: ' || DEREF(v_ref).nome || ', CPF: ' || DEREF(v_ref).cpf || 
+           ', Turno: ' || DEREF(v_ref).turno || ', Atendimentos Realizados: ' || 
+           (SELECT COUNT(*) FROM atendimento a WHERE a.cpf_recepcionista = p_cpf)
+    INTO v_info
+    FROM recepcionista r
+    WHERE r.cpf = p_cpf;
+
+    RETURN v_info;
+END;
+/
+
+-- Função para exibir informações do organizador com mais detalhes
+CREATE OR REPLACE FUNCTION tp_organizador.exibir_info(p_cpf IN organizador.cpf%TYPE)
+RETURN VARCHAR2 IS
+    v_info VARCHAR2(400);
+    v_ref REF organizador;
+BEGIN
+    -- Refere-se ao organizador e traz o nome do maior evento que ele organizou
+    SELECT 'Organizador: ' || DEREF(v_ref).nome || ', CPF: ' || DEREF(v_ref).cpf || 
+           ', Maior Evento: ' || 
+           (SELECT e.nome_evento FROM evento e 
+            WHERE e.organizador_cpf = p_cpf 
+            ORDER BY e.participantes DESC FETCH FIRST 1 ROWS ONLY)
+    INTO v_info
+    FROM organizador o
+    WHERE o.cpf = p_cpf;
+
+    RETURN v_info;
+END;
+/
+
+-- Função para exibir informações do vendedor com mais detalhes
+CREATE OR REPLACE FUNCTION tp_vendedor.exibir_info(p_cpf IN vendedor.cpf%TYPE)
+RETURN VARCHAR2 IS
+    v_info VARCHAR2(400);
+    v_ref REF vendedor;
+BEGIN
+    -- Refere-se ao vendedor e soma o total de ingressos vendidos e o valor total gerado
+    SELECT 'Vendedor: ' || DEREF(v_ref).nome || ', CPF: ' || DEREF(v_ref).cpf || 
+           ', Total Vendas: ' || DEREF(v_ref).total_vendas || 
+           ', Total Ingressos Vendidos: ' || (SELECT COUNT(*) FROM ingresso i WHERE i.cpf_vendedor = p_cpf) || 
+           ', Valor Total Gerado: ' || (SELECT SUM(i.valor) FROM ingresso i WHERE i.cpf_vendedor = p_cpf)
+    INTO v_info
+    FROM vendedor v
+    WHERE v.cpf = p_cpf;
+
+    RETURN v_info;
+END;
+/
